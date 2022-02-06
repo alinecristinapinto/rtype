@@ -2,7 +2,6 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
 #include "spaceship.h"
-#include "../../styles/colors.h"
 #include <stdio.h>
 
 const int SPACESHIP_WIDTH = 80;
@@ -21,9 +20,6 @@ void initSpaceship(Spaceship *spaceship, int screen_h){
 }
 
 void drawSpaceship(ALLEGRO_BITMAP *image, Spaceship spaceship){
-    Colors colors = getColors();
-
-    al_clear_to_color(colors.BLACK);
     al_draw_bitmap_region(
         image,
         spaceship.sx,

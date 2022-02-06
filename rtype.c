@@ -6,6 +6,7 @@
 #include <allegro5/allegro_image.h>
 #include "styles/colors.h"
 #include "ui/spaceship/spaceship.h"
+#include "ui/scenario/scenario.h"
 
 const float FPS = 100;  
 const int SCREEN_W = 960;
@@ -39,6 +40,11 @@ int main(int argc, char **argv){
 	//----------------------- elements -----------------------
 	Colors colors = getColors();
 
+	Star stars_p1[NUM_STARS];
+	initStars(stars_p1, SCREEN_W, SCREEN_H, 3);
+	Star stars_p2[NUM_STARS];
+	initStars(stars_p2, SCREEN_W, SCREEN_H, 5);
+
 	Spaceship spaceship;
 	initSpaceship(&spaceship, SCREEN_H);
 	ALLEGRO_BITMAP *spaceshipImage = al_load_bitmap("assets/img/spaceship.png");
@@ -55,6 +61,12 @@ int main(int argc, char **argv){
 			playing = 0;
 		} else if(ev.type == ALLEGRO_EVENT_TIMER) {
 
+			updateStars(stars_p1, SCREEN_W);
+			drawStars(stars_p1);
+
+			updateStars(stars_p2, SCREEN_W);
+			drawStars(stars_p2);
+
 			updateSpaceship(&spaceship, SCREEN_W, SCREEN_H);
 			drawSpaceship(spaceshipImage, spaceship);
 
@@ -65,6 +77,8 @@ int main(int argc, char **argv){
 		} else if(ev.type == ALLEGRO_EVENT_KEY_UP) {
 			controlSpaceship(ev.keyboard.keycode, &spaceship, KEY_UP);
 		}
+
+		al_clear_to_color(colors.BLACK);
 	} 
     
 	al_destroy_timer(timer);
