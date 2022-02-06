@@ -1,0 +1,15 @@
+# Visual Studio Code
+.vscode/*
+
+# Object files
+*.o
+*.obj
+
+# Libraries
+*.lib
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+
+# Executables
+*.exe
