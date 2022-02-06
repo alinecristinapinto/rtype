@@ -1,8 +1,9 @@
+#include <stdio.h>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
 #include "spaceship.h"
-#include <stdio.h>
+#include "../../styles/colors.h"
 
 const int SPACESHIP_WIDTH = 80;
 const int SPACESHIP_HEIGHT = 40;
@@ -45,7 +46,7 @@ void updateSpaceship(Spaceship *spaceship, int screen_w, int screen_h){
     spaceship->y = moveY;
 }
 
-void controlSpaceship(int keycode, Spaceship *spaceship, KeyEventsEnum keyEvent){
+void controlSpaceship(int keycode, Spaceship *spaceship, Projectile *projectile, KeyEventsEnum keyEvent){
     switch (keycode){
         case ALLEGRO_KEY_W:
             spaceship->sy = TOP;
@@ -73,7 +74,40 @@ void controlSpaceship(int keycode, Spaceship *spaceship, KeyEventsEnum keyEvent)
             if(keyEvent == KEY_UP) spaceship->moveX --;
             if(keyEvent == KEY_DOWN) spaceship->moveX ++;
             break;
+        case ALLEGRO_KEY_SPACE:
+            if(keyEvent == KEY_DOWN) shoot(projectile, spaceship);
+            break;
         default:
             break;
+    }
+}
+
+void initProjectile(Projectile *projectile){
+    projectile->moveSpeed = 10;
+    projectile->radius = 10;
+    projectile->active = false;
+}
+
+void shoot(Projectile *projectile, Spaceship *spaceship){
+    if(!projectile->active){
+        projectile->x = spaceship->x + SPACESHIP_WIDTH - 15;
+        projectile->y = spaceship->y + 15;
+        projectile->active = true;
+    }
+}
+
+void updateProjectile(Projectile *projectile, int screen_w){
+    projectile->x += projectile->moveSpeed;
+
+    if(projectile->x > screen_w){
+        projectile->active = false;
+    }
+}
+
+void drawProjectile(Projectile projectile){
+    Colors colors = getColors();
+
+    if(projectile.active){
+        al_draw_filled_circle(projectile.x, projectile.y, projectile.radius, colors.MEDIUM_VIOLET_RED);
     }
 }

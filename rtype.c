@@ -49,6 +49,8 @@ int main(int argc, char **argv){
 	initSpaceship(&spaceship, SCREEN_H);
 	ALLEGRO_BITMAP *spaceshipImage = al_load_bitmap("assets/img/spaceship.png");
 	
+	Projectile projectile;
+	initProjectile(&projectile);
 	//----------------------- main -----------------------
 
 	int playing = 1;
@@ -70,12 +72,15 @@ int main(int argc, char **argv){
 			updateSpaceship(&spaceship, SCREEN_W, SCREEN_H);
 			drawSpaceship(spaceshipImage, spaceship);
 
+			updateProjectile(&projectile, SCREEN_W);
+			drawProjectile(projectile);
+
 			al_flip_display();
 			
 		} else if(ev.type == ALLEGRO_EVENT_KEY_DOWN) {
-			controlSpaceship(ev.keyboard.keycode, &spaceship, KEY_DOWN);
+			controlSpaceship(ev.keyboard.keycode, &spaceship, &projectile, KEY_DOWN);
 		} else if(ev.type == ALLEGRO_EVENT_KEY_UP) {
-			controlSpaceship(ev.keyboard.keycode, &spaceship, KEY_UP);
+			controlSpaceship(ev.keyboard.keycode, &spaceship, &projectile, KEY_UP);
 		}
 
 		al_clear_to_color(colors.BLACK);
