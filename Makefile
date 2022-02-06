@@ -7,14 +7,35 @@ PATH_ALLEGRO=$(FOLDER)$(FOLDER_NAME)
 LIB_ALLEGRO=\lib\liballegro-$(ALLEGRO_VERSION)-monolith-mt.a
 INCLUDE_ALLEGRO=\include
 
-all: rtype.exe
-	
-rtype.exe: rtype.o
-	gcc -o rtype.exe rtype.o $(PATH_ALLEGRO)$(LIB_ALLEGRO)
+MKDIR   := mkdir
+RMDIR   := rmdir /Q /S
+CC      := gcc
+BIN     := bin
+OBJ     := obj
+OBJ_INIT:= $(OBJ)/init
+SRCS    := $(wildcard *.c) $(wildcard */*.c)  $(wildcard */*/*.c)
+OBJS    := $(patsubst %.c,$(OBJ)/%.o,$(SRCS))
+EXE     := rtype.exe
+CFLAGS  := -g -I
 
-rtype.o: rtype.c
-	gcc -I $(PATH_ALLEGRO)$(INCLUDE_ALLEGRO) -c rtype.c	
-		
+.PHONY: all run clean path
+
+all: $(EXE)
+
+$(EXE): $(OBJS) | $(BIN)
+	$(CC) $^ -o $@ $(PATH_ALLEGRO)$(LIB_ALLEGRO)
+
+$(OBJ)/%.o: %.c | $(OBJ)
+	@echo "COMPILING SOURCE $< INTO OBJECT $@"
+	if not exist "$(@D)" $(MKDIR) $(subst /,\\,$(@D))
+	$(CC) $(CFLAGS) $(PATH_ALLEGRO)$(INCLUDE_ALLEGRO) -c $< -o $@
+
+$(OBJ_INIT) $(BIN) $(OBJ):
+	$(MKDIR) $@
+
+run: $(EXE)
+	$<
+
 clean:
-	del rtype.o
-	del rtype.exe
+	$(RMDIR) $(subst /,\\,$(OBJ))
+	$(RMDIR) $(subst /,\\,$(BIN))
