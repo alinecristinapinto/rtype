@@ -79,7 +79,7 @@ void controlSpaceship(int keycode, Spaceship *spaceship, Projectile *projectile,
 
 void initProjectile(Projectile *projectile){
     projectile->moveSpeed = 10;
-    projectile->radius = 10;
+    projectile->radius = 4;
     projectile->active = false;
 }
 
@@ -103,6 +103,24 @@ void drawProjectile(Projectile projectile){
     Colors colors = getColors();
 
     if(projectile.active){
-        al_draw_filled_circle(projectile.x, projectile.y, projectile.radius, colors.MEDIUM_VIOLET_RED);
+        al_draw_filled_circle(projectile.x, projectile.y, projectile.radius, colors.CYAN);
+    }
+}
+
+int hasCollisionBetweenProjectileAndEnemies(Projectile *projectile, Enemy enemy){
+    int xArea = projectile->x > enemy.x && projectile->x < (enemy.x + enemy.width);
+    int yArea = projectile->y > enemy.y && projectile->y < (enemy.y + enemy.height);
+
+    return xArea && yArea;
+}
+
+void projectileAndEnemiesCollision(Projectile *projectile, Enemy enemies[]){
+    for (int i = 0; i < NUM_ENEMIES; i++){
+        if(projectile->active && enemies[i].active){
+            if(hasCollisionBetweenProjectileAndEnemies(projectile, enemies[i])){
+                enemies[i].active = false;
+                projectile->active = false;
+            }
+        }
     }
 }

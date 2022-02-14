@@ -9,8 +9,8 @@ void updateEnemies(Enemy enemies[]);
 
 void drawEnemies(Enemy enemies[]);
 
-void handleCollsionBetweenEnemies(Enemy enemies[]);
+void handleCollisionBetweenEnemies(Enemy enemies[]);
 
-void handleCollsionBetweenEnemiesAndBlock(Enemy enemies[], Block block);
+void handleCollisionBetweenEnemiesAndBlock(Enemy enemies[], Block block);
 
-int spaceshipAndEnemiesCollsion(Spaceship spaceship, Enemy enemies[]);
+int spaceshipAndEnemiesCollision(Spaceship spaceship, Enemy enemies[]);

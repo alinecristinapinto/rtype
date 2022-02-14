@@ -7,4 +7,4 @@ void updateBlock(Block *block, int screen_w, int screen_h);
 
 void drawBlock(Block block);
 
-int spaceshipAndBlockCollsion(Spaceship spaceship, Block block);
+int spaceshipAndBlockCollision(Spaceship spaceship, Block block);

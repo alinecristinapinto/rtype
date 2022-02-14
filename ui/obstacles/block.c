@@ -35,7 +35,7 @@ void drawBlock(Block block){
     );
 }
 
-int spaceshipAndBlockCollsion(Spaceship spaceship, Block block){
+int spaceshipAndBlockCollision(Spaceship spaceship, Block block){
     int xArea = (spaceship.x + spaceship.width) > block.x && spaceship.x < (block.x + block.width);
     int yArea = (spaceship.y + spaceship.height) > block.y && spaceship.y < (block.y + block.height);
 

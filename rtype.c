@@ -94,16 +94,17 @@ int main(int argc, char **argv){
 
 			updateProjectile(&projectile, SCREEN_W);
 			drawProjectile(projectile);
+			projectileAndEnemiesCollision(&projectile, enemies);
 
 			releaseEnemies(enemies, SCREEN_W, SCREEN_H);
 			updateEnemies(enemies);
 			drawEnemies(enemies);
-			handleCollsionBetweenEnemies(enemies);
-			handleCollsionBetweenEnemiesAndBlock(enemies, block);
+			handleCollisionBetweenEnemies(enemies);
+			handleCollisionBetweenEnemiesAndBlock(enemies, block);
 			
 			// // BUG
-			// playing = !spaceshipAndEnemiesCollsion(spaceship, enemies);
-			// playing = !spaceshipAndBlockCollsion(spaceship, block);
+			// playing = !spaceshipAndEnemiesCollision(spaceship, enemies);
+			// playing = !spaceshipAndBlockCollision(spaceship, block);
 
 			al_flip_display();
 			

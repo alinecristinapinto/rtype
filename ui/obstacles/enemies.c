@@ -109,19 +109,19 @@ void drawEnemies(Enemy enemies[]){
     }
 }
 
-int hasCollsionBetweenEnemies(Enemy enemy1, Enemy enemy2){
+int hasCollisionBetweenEnemies(Enemy enemy1, Enemy enemy2){
     int xArea = (enemy1.x + enemy1.width) > enemy2.x && enemy1.x < (enemy2.x + enemy2.width);
     int yArea = (enemy1.y + enemy1.height) > enemy2.y && enemy1.y < (enemy2.y + enemy2.height);
 
     return xArea && yArea;
 }
 
-void handleCollsionBetweenEnemies(Enemy enemies[]){
+void handleCollisionBetweenEnemies(Enemy enemies[]){
     for (int i = 0; i < NUM_ENEMIES; i++){
         if(enemies[i].active){
             for (int j = 0; j < NUM_ENEMIES; j++){
                 if(enemies[j].active &&  enemies[i].id != enemies[j].id){
-                    if(hasCollsionBetweenEnemies(enemies[i], enemies[j])){
+                    if(hasCollisionBetweenEnemies(enemies[i], enemies[j])){
                         enemies[i].active = 0;
                         enemies[j].active = 0;
                     }
@@ -131,24 +131,24 @@ void handleCollsionBetweenEnemies(Enemy enemies[]){
     }
 }
 
-int hasCollsionBetweenEnemiesAndBlock(Enemy enemy1, Block block){
+int hasCollisionBetweenEnemiesAndBlock(Enemy enemy1, Block block){
     int xArea = (enemy1.x + enemy1.width) > block.x && enemy1.x < (block.x + block.width);
     int yArea = (enemy1.y + enemy1.height) > block.y && enemy1.y < (block.y + block.height);
 
     return xArea && yArea;
 }
 
-void handleCollsionBetweenEnemiesAndBlock(Enemy enemies[], Block block){
+void handleCollisionBetweenEnemiesAndBlock(Enemy enemies[], Block block){
     for (int i = 0; i < NUM_ENEMIES; i++){
         if(enemies[i].active){
-            if(hasCollsionBetweenEnemiesAndBlock(enemies[i], block)){
+            if(hasCollisionBetweenEnemiesAndBlock(enemies[i], block)){
                 enemies[i].active = 0;
             }
         }
     }
 }
 
-int spaceshipAndEnemiesCollsion(Spaceship spaceship, Enemy enemies[]){
+int spaceshipAndEnemiesCollision(Spaceship spaceship, Enemy enemies[]){
     for (int i = 0; i < NUM_ENEMIES; i++){
         if(enemies[i].active){
             int xArea = (spaceship.x + spaceship.width) > enemies[i].x && spaceship.x < (enemies[i].x + enemies[i].width);
