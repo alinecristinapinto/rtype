@@ -65,7 +65,8 @@ int main(int argc, char **argv){
 	initBlock(&block, SCREEN_W, SCREEN_H);
 
 	Enemy enemies[NUM_ENEMIES];
-	initEnemies(enemies);
+	ALLEGRO_BITMAP *enemiesImage = al_load_bitmap("assets/img/enemies.png");
+	initEnemies(enemies, enemiesImage);
 
 	//----------------------- main -----------------------
 
@@ -114,6 +115,7 @@ int main(int argc, char **argv){
 	al_destroy_timer(timer);
 	al_destroy_bitmap(spaceshipImage);
 	al_destroy_bitmap(blockImage);
+	al_destroy_bitmap(enemiesImage);
 	al_destroy_display(display);
 	al_destroy_event_queue(event_queue);
  

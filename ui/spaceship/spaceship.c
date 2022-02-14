@@ -5,10 +5,6 @@
 #include "spaceship.h"
 #include "../../styles/colors.h"
 
-const int SPACESHIP_WIDTH = 62;
-const int SPACESHIP_HEIGHT = 28;
-const int SPACESHIP_SPEED = 5;
-
 void initSpaceship(Spaceship *spaceship, int screen_h){
 	spaceship->x = 0;
 	spaceship->y = screen_h/2;
@@ -17,8 +13,6 @@ void initSpaceship(Spaceship *spaceship, int screen_h){
 	spaceship->width = SPACESHIP_WIDTH;
 	spaceship->height = SPACESHIP_HEIGHT;
 	spaceship->moveSpeed = SPACESHIP_SPEED;
-    spaceship->bx = spaceship->width;
-    spaceship->by = spaceship->height;
 }
 
 void drawSpaceship(Spaceship spaceship){
@@ -39,9 +33,9 @@ void updateSpaceship(Spaceship *spaceship, int screen_w, int screen_h){
     float moveY = spaceship->y + spaceship->moveY * spaceship->moveSpeed;
 
     if(moveX <= 0) moveX = 0;
-    if(moveX >= (screen_w - SPACESHIP_WIDTH)) moveX = (screen_w - SPACESHIP_WIDTH);
+    if(moveX >= (screen_w - spaceship->width)) moveX = (screen_w - spaceship->width);
     if(moveY <= 0) moveY = 0;
-    if(moveY >= (screen_h - SPACESHIP_HEIGHT)) moveY = (screen_h - SPACESHIP_HEIGHT);
+    if(moveY >= (screen_h - spaceship->height)) moveY = (screen_h - spaceship->height);
 
     spaceship->x = moveX;
     spaceship->y = moveY;
@@ -91,7 +85,7 @@ void initProjectile(Projectile *projectile){
 
 void shoot(Projectile *projectile, Spaceship *spaceship){
     if(!projectile->active){
-        projectile->x = spaceship->x + SPACESHIP_WIDTH - 15;
+        projectile->x = spaceship->x + spaceship->width - 15;
         projectile->y = spaceship->y + 15;
         projectile->active = true;
     }

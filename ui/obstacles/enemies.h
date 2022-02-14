@@ -1,6 +1,6 @@
 #include "../../interfaces/obstacles_interface.h"
 
-void initEnemies(Enemy enemies[]);
+void initEnemies(Enemy enemies[], ALLEGRO_BITMAP *image);
 
 void releaseEnemies(Enemy enemies[], int screen_w, int screen_h);
 

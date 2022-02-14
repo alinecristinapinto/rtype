@@ -4,16 +4,58 @@
 #include <allegro5/allegro_image.h>
 #include "enemies.h"
 
-const int ENEMY_SPEED = 3;
-
 EnemyTypeEnum sortEnemyType(){
-    return BYDO_MINION_1;
+    return (enum EnemyTypeEnum)(rand()%3); 
 }
 
-void initEnemies(Enemy enemies[]){
+float sortEnemyTypePosition(EnemyTypeEnum type){
+    switch (type){
+        case BYDO_MINION_1:
+            return BYDO_MINION_1_POSITION;
+        case BYDO_MINION_2:
+            return BYDO_MINION_2_POSITION;
+        case BYDO_MINION_3:
+            return BYDO_MINION_3_POSITION;
+        default:
+            return BYDO_MINION_1_POSITION;
+    }
+}
+
+float sortEnemyTypeWidth(EnemyTypeEnum type){
+    switch (type){
+        case BYDO_MINION_1:
+            return BYDO_MINION_1_WIDTH;
+        case BYDO_MINION_2:
+            return BYDO_MINION_2_WIDTH;
+        case BYDO_MINION_3:
+            return BYDO_MINION_3_WIDTH;
+        default:
+            return BYDO_MINION_1_WIDTH;
+    }
+}
+
+float sortEnemyTypeHeight(EnemyTypeEnum type){
+    switch (type){
+        case BYDO_MINION_1:
+            return BYDO_MINION_1_HEIGHT;
+        case BYDO_MINION_2:
+            return BYDO_MINION_2_HEIGHT;
+        case BYDO_MINION_3:
+            return BYDO_MINION_3_HEIGHT;
+        default:
+            return BYDO_MINION_1_HEIGHT;
+    }
+}
+
+void initEnemies(Enemy enemies[], ALLEGRO_BITMAP *image){
     for (int i = 0; i < NUM_ENEMIES; i++){
         enemies[i].id = i+1;
+        enemies[i].image = image;
+        enemies[i].type = sortEnemyType();
         enemies[i].sx = 0;
+        enemies[i].sy = sortEnemyTypePosition(enemies[i].type);
+        enemies[i].width = sortEnemyTypeWidth(enemies[i].type);
+        enemies[i].height = sortEnemyTypeHeight(enemies[i].type);
         enemies[i].moveSpeed = 1+rand()%ENEMY_SPEED;
         enemies[i].active = false;
     }
@@ -47,7 +89,16 @@ void updateEnemies(Enemy enemies[]){
 void drawEnemies(Enemy enemies[]){
     for (int i = 0; i < NUM_ENEMIES; i++){
         if(enemies[i].active){
-            al_draw_filled_circle(enemies[i].x, enemies[i].y, 20, al_map_rgba_f(.6,0,.6,.6));
+            al_draw_bitmap_region(
+                enemies[i].image,
+                enemies[i].sx,
+                enemies[i].sy,
+                enemies[i].width,
+                enemies[i].height,
+                enemies[i].x,
+                enemies[i].y, 
+                0
+            );
         }
     }
 }
