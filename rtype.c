@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
@@ -8,6 +10,7 @@
 #include "ui/spaceship/spaceship.h"
 #include "ui/scenario/scenario.h"
 #include "ui/obstacles/block.h"
+#include "ui/obstacles/enemies.h"
 
 const float FPS = 100;  
 const int SCREEN_W = 960;
@@ -41,6 +44,8 @@ int main(int argc, char **argv){
 	//----------------------- elements -----------------------
 	Colors colors = getColors();
 
+	srand(time(NULL));
+
 	Star stars_p1[NUM_STARS];
 	initStars(stars_p1, SCREEN_W, SCREEN_H, 3);
 	Star stars_p2[NUM_STARS];
@@ -58,6 +63,9 @@ int main(int argc, char **argv){
 	ALLEGRO_BITMAP *blockImage = al_load_bitmap("assets/img/block.png");
 	block.image = blockImage;
 	initBlock(&block, SCREEN_W, SCREEN_H);
+
+	Enemy enemies[NUM_ENEMIES];
+	initEnemies(enemies);
 
 	//----------------------- main -----------------------
 
@@ -86,6 +94,10 @@ int main(int argc, char **argv){
 			updateProjectile(&projectile, SCREEN_W);
 			drawProjectile(projectile);
 
+			releaseEnemies(enemies, SCREEN_W, SCREEN_H);
+			updateEnemies(enemies);
+			drawEnemies(enemies);
+
 			playing = !spaceshipAndBlockCollsion(spaceship, block);
 
 			al_flip_display();
@@ -101,6 +113,7 @@ int main(int argc, char **argv){
     
 	al_destroy_timer(timer);
 	al_destroy_bitmap(spaceshipImage);
+	al_destroy_bitmap(blockImage);
 	al_destroy_display(display);
 	al_destroy_event_queue(event_queue);
  
