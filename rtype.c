@@ -86,8 +86,8 @@ int main(int argc, char **argv){
 			updateStars(stars_p2, SCREEN_W);
 			drawStars(stars_p2);
 
-			updateBlock(&block, SCREEN_W, SCREEN_H);
-			drawBlock(block);
+			// updateBlock(&block, SCREEN_W, SCREEN_H);
+			// drawBlock(block);
 
 			updateSpaceship(&spaceship, SCREEN_W, SCREEN_H);
 			drawSpaceship(spaceship);
@@ -98,8 +98,12 @@ int main(int argc, char **argv){
 			releaseEnemies(enemies, SCREEN_W, SCREEN_H);
 			updateEnemies(enemies);
 			drawEnemies(enemies);
-
-			playing = !spaceshipAndBlockCollsion(spaceship, block);
+			handleCollsionBetweenEnemies(enemies);
+			handleCollsionBetweenEnemiesAndBlock(enemies, block);
+			
+			// // BUG
+			// playing = !spaceshipAndEnemiesCollsion(spaceship, enemies);
+			// playing = !spaceshipAndBlockCollsion(spaceship, block);
 
 			al_flip_display();
 			

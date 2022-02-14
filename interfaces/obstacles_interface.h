@@ -4,9 +4,8 @@
 #define PDS_TP1_RTYPE_OBSTACLES_INTERFACE_H
 
 #define NUM_ENEMIES 10
-#define ENEMY_WIDTH 51;
-#define ENEMY_HEIGHT 143;
-#define ENEMY_SPEED 3
+#define ENEMY_SPEED 5
+#define BLOCK_SPEED 10;
 
 typedef struct Block
 {

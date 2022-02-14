@@ -99,6 +99,68 @@ void drawEnemies(Enemy enemies[]){
                 enemies[i].y, 
                 0
             );
+
+            al_draw_filled_rectangle(enemies[i].x,
+                             enemies[i].y,
+                             enemies[i].x+enemies[i].width,
+                             enemies[i].y+enemies[i].height,
+                             al_map_rgba_f(.6,0,.6,.6));
         }
     }
 }
+
+int hasCollsionBetweenEnemies(Enemy enemy1, Enemy enemy2){
+    int xArea = (enemy1.x + enemy1.width) > enemy2.x && enemy1.x < (enemy2.x + enemy2.width);
+    int yArea = (enemy1.y + enemy1.height) > enemy2.y && enemy1.y < (enemy2.y + enemy2.height);
+
+    return xArea && yArea;
+}
+
+void handleCollsionBetweenEnemies(Enemy enemies[]){
+    for (int i = 0; i < NUM_ENEMIES; i++){
+        if(enemies[i].active){
+            for (int j = 0; j < NUM_ENEMIES; j++){
+                if(enemies[j].active &&  enemies[i].id != enemies[j].id){
+                    if(hasCollsionBetweenEnemies(enemies[i], enemies[j])){
+                        enemies[i].active = 0;
+                        enemies[j].active = 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+int hasCollsionBetweenEnemiesAndBlock(Enemy enemy1, Block block){
+    int xArea = (enemy1.x + enemy1.width) > block.x && enemy1.x < (block.x + block.width);
+    int yArea = (enemy1.y + enemy1.height) > block.y && enemy1.y < (block.y + block.height);
+
+    return xArea && yArea;
+}
+
+void handleCollsionBetweenEnemiesAndBlock(Enemy enemies[], Block block){
+    for (int i = 0; i < NUM_ENEMIES; i++){
+        if(enemies[i].active){
+            if(hasCollsionBetweenEnemiesAndBlock(enemies[i], block)){
+                enemies[i].active = 0;
+            }
+        }
+    }
+}
+
+int spaceshipAndEnemiesCollsion(Spaceship spaceship, Enemy enemies[]){
+    for (int i = 0; i < NUM_ENEMIES; i++){
+        if(enemies[i].active){
+            int xArea = (spaceship.x + spaceship.width) > enemies[i].x && spaceship.x < (enemies[i].x + enemies[i].width);
+            int yArea = (spaceship.y + spaceship.height) > enemies[i].y && spaceship.y < (enemies[i].y + enemies[i].height);
+
+            if(xArea && yArea) {
+                printf("Colidiu\n");
+                return 1;
+            };
+        }
+    }
+
+    return 0;
+}
+

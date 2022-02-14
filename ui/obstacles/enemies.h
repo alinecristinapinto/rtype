@@ -1,3 +1,4 @@
+#include "../../interfaces/spaceship_interface.h"
 #include "../../interfaces/obstacles_interface.h"
 
 void initEnemies(Enemy enemies[], ALLEGRO_BITMAP *image);
@@ -8,4 +9,8 @@ void updateEnemies(Enemy enemies[]);
 
 void drawEnemies(Enemy enemies[]);
 
-// int spaceshipAndBlockCollsion(Spaceship spaceship, Block block);
+void handleCollsionBetweenEnemies(Enemy enemies[]);
+
+void handleCollsionBetweenEnemiesAndBlock(Enemy enemies[], Block block);
+
+int spaceshipAndEnemiesCollsion(Spaceship spaceship, Enemy enemies[]);
