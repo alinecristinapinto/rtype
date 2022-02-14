@@ -5,12 +5,11 @@
 #include "spaceship.h"
 #include "../../styles/colors.h"
 
-const int SPACESHIP_WIDTH = 80;
-const int SPACESHIP_HEIGHT = 40;
+const int SPACESHIP_WIDTH = 62;
+const int SPACESHIP_HEIGHT = 28;
 const int SPACESHIP_SPEED = 5;
 
 void initSpaceship(Spaceship *spaceship, int screen_h){
-	spaceship->image = al_load_bitmap("spaceship.png");
 	spaceship->x = 0;
 	spaceship->y = screen_h/2;
 	spaceship->sx = 0;
@@ -18,11 +17,13 @@ void initSpaceship(Spaceship *spaceship, int screen_h){
 	spaceship->width = SPACESHIP_WIDTH;
 	spaceship->height = SPACESHIP_HEIGHT;
 	spaceship->moveSpeed = SPACESHIP_SPEED;
+    spaceship->bx = spaceship->width;
+    spaceship->by = spaceship->height;
 }
 
-void drawSpaceship(ALLEGRO_BITMAP *image, Spaceship spaceship){
+void drawSpaceship(Spaceship spaceship){
     al_draw_bitmap_region(
-        image,
+        spaceship.image,
         spaceship.sx,
         spaceship.sy,
         spaceship.width,

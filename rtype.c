@@ -7,6 +7,7 @@
 #include "styles/colors.h"
 #include "ui/spaceship/spaceship.h"
 #include "ui/scenario/scenario.h"
+#include "ui/obstacles/block.h"
 
 const float FPS = 100;  
 const int SCREEN_W = 960;
@@ -46,11 +47,18 @@ int main(int argc, char **argv){
 	initStars(stars_p2, SCREEN_W, SCREEN_H, 5);
 
 	Spaceship spaceship;
-	initSpaceship(&spaceship, SCREEN_H);
 	ALLEGRO_BITMAP *spaceshipImage = al_load_bitmap("assets/img/spaceship.png");
+	spaceship.image = spaceshipImage;
+	initSpaceship(&spaceship, SCREEN_H);
 	
 	Projectile projectile;
 	initProjectile(&projectile);
+
+	Block block;
+	ALLEGRO_BITMAP *blockImage = al_load_bitmap("assets/img/block.png");
+	block.image = blockImage;
+	initBlock(&block, SCREEN_W, SCREEN_H);
+
 	//----------------------- main -----------------------
 
 	int playing = 1;
@@ -69,11 +77,16 @@ int main(int argc, char **argv){
 			updateStars(stars_p2, SCREEN_W);
 			drawStars(stars_p2);
 
+			updateBlock(&block, SCREEN_W, SCREEN_H);
+			drawBlock(block);
+
 			updateSpaceship(&spaceship, SCREEN_W, SCREEN_H);
-			drawSpaceship(spaceshipImage, spaceship);
+			drawSpaceship(spaceship);
 
 			updateProjectile(&projectile, SCREEN_W);
 			drawProjectile(projectile);
+
+			playing = !spaceshipAndBlockCollsion(spaceship, block);
 
 			al_flip_display();
 			

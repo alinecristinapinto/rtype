@@ -1,9 +1,4 @@
-#define NUM_STARS 50
-
-typedef struct Star
-{
-    float x, y, radius, moveSpeed;
-} Star;
+#include "../../interfaces/scenario_interface.h"
 
 void initStars(Star stars[], int screen_w, int screen_h, float moveSpeed);
 
