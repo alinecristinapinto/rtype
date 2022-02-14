@@ -70,39 +70,60 @@ void controlSpaceship(int keycode, Spaceship *spaceship, Projectile *projectile,
             if(keyEvent == KEY_DOWN) spaceship->moveX ++;
             break;
         case ALLEGRO_KEY_SPACE:
-            if(keyEvent == KEY_DOWN) shoot(projectile, spaceship);
+            if(keyEvent == KEY_DOWN) {
+                if(!projectile->state.active){
+                    projectile->state.active = 1;
+                    projectile->state.loading = 1;
+                }
+            }
+            if(keyEvent == KEY_UP) {
+                projectile->state.loading = 0;
+                projectile->state.released = 1;
+            }
             break;
         default:
             break;
     }
 }
 
-void initProjectile(Projectile *projectile){
+void initProjectile(Projectile *projectile, Spaceship spaceship){
+    projectile->radius = BASE_PROJECTILE_RADIUS;
     projectile->moveSpeed = 10;
-    projectile->radius = 4;
-    projectile->active = false;
+    projectile->state.active = 0;
+    projectile->state.loading = 0;
+    projectile->state.released = 0;
+    projectile->x = spaceship.x + spaceship.width + 5;
+    projectile->y = spaceship.y + 17;
 }
 
-void shoot(Projectile *projectile, Spaceship *spaceship){
-    if(!projectile->active){
-        projectile->x = spaceship->x + spaceship->width - 15;
-        projectile->y = spaceship->y + 15;
-        projectile->active = true;
+void resetProjectile(Projectile *projectile, Spaceship spaceship){
+    initProjectile(projectile, spaceship);
+}
+
+void powerUpProjectile(Projectile *projectile, Spaceship spaceship){
+    projectile->radius += 0.20;
+    projectile->x = spaceship.x + spaceship.width + 10;
+    projectile->y = spaceship.y + 17;
+}
+
+void updateProjectile(Projectile *projectile, Spaceship spaceship, int screen_w){
+    if(projectile->state.loading && projectile->radius <= MAX_PROJECTILE_RADIUS){
+        powerUpProjectile(projectile, spaceship);
     }
-}
 
-void updateProjectile(Projectile *projectile, int screen_w){
-    projectile->x += projectile->moveSpeed;
+    if(projectile->state.released){
+        projectile->x += projectile->moveSpeed;
+    }
 
-    if(projectile->x > screen_w){
-        projectile->active = false;
+    if(projectile->state.active && projectile->x > screen_w){
+        resetProjectile(projectile, spaceship);
     }
 }
 
 void drawProjectile(Projectile projectile){
     Colors colors = getColors();
 
-    if(projectile.active){
+    if(projectile.state.active){
         al_draw_filled_circle(projectile.x, projectile.y, projectile.radius, colors.CYAN);
     }
 }
@@ -114,12 +135,14 @@ int hasCollisionBetweenProjectileAndEnemies(Projectile *projectile, Enemy enemy)
     return xArea && yArea;
 }
 
-void projectileAndEnemiesCollision(Projectile *projectile, Enemy enemies[]){
+void projectileAndEnemiesCollision(Projectile *projectile, Spaceship spaceship, Enemy enemies[]){
     for (int i = 0; i < NUM_ENEMIES; i++){
-        if(projectile->active && enemies[i].active){
+        if(projectile->state.active && enemies[i].active){
             if(hasCollisionBetweenProjectileAndEnemies(projectile, enemies[i])){
-                enemies[i].active = false;
-                projectile->active = false;
+                enemies[i].active = 0;
+                if(projectile->radius < MAX_PROJECTILE_RADIUS){
+                    resetProjectile(projectile, spaceship);
+                }
             }
         }
     }

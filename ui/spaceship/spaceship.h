@@ -11,12 +11,12 @@ void drawSpaceship(Spaceship spaceship);
 void controlSpaceship(int keyCode, Spaceship *spaceship, Projectile *projectile, KeyEventsEnum keyEvent);
 
 // Projectiles
-void initProjectile(Projectile *projectile);
+void initProjectile(Projectile *projectile, Spaceship spaceship);
 
 void shoot(Projectile *projectile, Spaceship *spaceship);
 
-void updateProjectile(Projectile *projectile, int screen_w);
+void updateProjectile(Projectile *projectile, Spaceship spaceship, int screen_w);
 
 void drawProjectile(Projectile projectile);
 
-void projectileAndEnemiesCollision(Projectile *projectile, Enemy enemies[]);
+void projectileAndEnemiesCollision(Projectile *projectile, Spaceship spaceship, Enemy enemies[]);

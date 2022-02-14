@@ -57,7 +57,7 @@ int main(int argc, char **argv){
 	initSpaceship(&spaceship, SCREEN_H);
 	
 	Projectile projectile;
-	initProjectile(&projectile);
+	initProjectile(&projectile, spaceship);
 
 	Block block;
 	ALLEGRO_BITMAP *blockImage = al_load_bitmap("assets/img/block.png");
@@ -86,15 +86,15 @@ int main(int argc, char **argv){
 			updateStars(stars_p2, SCREEN_W);
 			drawStars(stars_p2);
 
-			// updateBlock(&block, SCREEN_W, SCREEN_H);
-			// drawBlock(block);
+			updateBlock(&block, SCREEN_W, SCREEN_H);
+			drawBlock(block);
 
 			updateSpaceship(&spaceship, SCREEN_W, SCREEN_H);
 			drawSpaceship(spaceship);
 
-			updateProjectile(&projectile, SCREEN_W);
+			updateProjectile(&projectile, spaceship, SCREEN_W);
 			drawProjectile(projectile);
-			projectileAndEnemiesCollision(&projectile, enemies);
+			projectileAndEnemiesCollision(&projectile, spaceship, enemies);
 
 			releaseEnemies(enemies, SCREEN_W, SCREEN_H);
 			updateEnemies(enemies);
@@ -102,9 +102,8 @@ int main(int argc, char **argv){
 			handleCollisionBetweenEnemies(enemies);
 			handleCollisionBetweenEnemiesAndBlock(enemies, block);
 			
-			// // BUG
-			// playing = !spaceshipAndEnemiesCollision(spaceship, enemies);
-			// playing = !spaceshipAndBlockCollision(spaceship, block);
+			playing = !spaceshipAndEnemiesCollision(spaceship, enemies) &&
+					  !spaceshipAndBlockCollision(spaceship, block);
 
 			al_flip_display();
 			

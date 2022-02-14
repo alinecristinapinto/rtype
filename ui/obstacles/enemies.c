@@ -100,11 +100,11 @@ void drawEnemies(Enemy enemies[]){
                 0
             );
 
-            al_draw_filled_rectangle(enemies[i].x,
-                             enemies[i].y,
-                             enemies[i].x+enemies[i].width,
-                             enemies[i].y+enemies[i].height,
-                             al_map_rgba_f(.6,0,.6,.6));
+            // al_draw_filled_rectangle(enemies[i].x,
+            //                  enemies[i].y,
+            //                  enemies[i].x+enemies[i].width,
+            //                  enemies[i].y+enemies[i].height,
+            //                  al_map_rgba_f(.6,0,.6,.6));
         }
     }
 }
@@ -151,11 +151,12 @@ void handleCollisionBetweenEnemiesAndBlock(Enemy enemies[], Block block){
 int spaceshipAndEnemiesCollision(Spaceship spaceship, Enemy enemies[]){
     for (int i = 0; i < NUM_ENEMIES; i++){
         if(enemies[i].active){
-            int xArea = (spaceship.x + spaceship.width) > enemies[i].x && spaceship.x < (enemies[i].x + enemies[i].width);
-            int yArea = (spaceship.y + spaceship.height) > enemies[i].y && spaceship.y < (enemies[i].y + enemies[i].height);
+            int xArea = (spaceship.x + spaceship.width) > enemies[i].x &&
+                         spaceship.x < (enemies[i].x + enemies[i].width);
+            int yArea = (spaceship.y + spaceship.height) > enemies[i].y &&
+                         spaceship.y < (enemies[i].y + enemies[i].height);
 
             if(xArea && yArea) {
-                printf("Colidiu\n");
                 return 1;
             };
         }
