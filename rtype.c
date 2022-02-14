@@ -68,6 +68,10 @@ int main(int argc, char **argv){
 	ALLEGRO_BITMAP *enemiesImage = al_load_bitmap("assets/img/enemies.png");
 	initEnemies(enemies, enemiesImage);
 
+	Score score;
+	initScore(&score);
+    ALLEGRO_FONT *font = al_load_font("assets/fonts/AtariSmall.ttf", 22, 1);
+	
 	//----------------------- main -----------------------
 
 	int playing = 1;
@@ -94,13 +98,15 @@ int main(int argc, char **argv){
 
 			updateProjectile(&projectile, spaceship, SCREEN_W);
 			drawProjectile(projectile);
-			projectileAndEnemiesCollision(&projectile, spaceship, enemies);
+			projectileAndEnemiesCollision(&projectile, spaceship, &score, enemies);
 
 			releaseEnemies(enemies, SCREEN_W, SCREEN_H);
 			updateEnemies(enemies);
 			drawEnemies(enemies);
 			handleCollisionBetweenEnemies(enemies);
 			handleCollisionBetweenEnemiesAndBlock(enemies, block);
+
+			drawScore(score, SCREEN_W, SCREEN_H, font);
 			
 			playing = !spaceshipAndEnemiesCollision(spaceship, enemies) &&
 					  !spaceshipAndBlockCollision(spaceship, block);
@@ -120,6 +126,7 @@ int main(int argc, char **argv){
 	al_destroy_bitmap(spaceshipImage);
 	al_destroy_bitmap(blockImage);
 	al_destroy_bitmap(enemiesImage);
+	al_destroy_font(font);
 	al_destroy_display(display);
 	al_destroy_event_queue(event_queue);
  

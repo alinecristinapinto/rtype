@@ -1,5 +1,6 @@
 #include "../../interfaces/spaceship_interface.h"
 #include "../../interfaces/obstacles_interface.h"
+#include "../../interfaces/scenario_interface.h"
 
 // Spaceship
 void initSpaceship(Spaceship *spaceship, int screen_h);
@@ -19,4 +20,4 @@ void updateProjectile(Projectile *projectile, Spaceship spaceship, int screen_w)
 
 void drawProjectile(Projectile projectile);
 
-void projectileAndEnemiesCollision(Projectile *projectile, Spaceship spaceship, Enemy enemies[]);
+void projectileAndEnemiesCollision(Projectile *projectile, Spaceship spaceship, Score *score, Enemy enemies[]);

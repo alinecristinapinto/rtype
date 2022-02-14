@@ -135,11 +135,25 @@ int hasCollisionBetweenProjectileAndEnemies(Projectile *projectile, Enemy enemy)
     return xArea && yArea;
 }
 
-void projectileAndEnemiesCollision(Projectile *projectile, Spaceship spaceship, Enemy enemies[]){
+void handleScore(Score *score, Enemy enemy){
+    score->score += 2 * abs(enemy.moveSpeed) + (enemy.type * 4);
+    score->numerKilledBydoMinion1 = enemy.type == BYDO_MINION_1 
+                                    ? (score->numerKilledBydoMinion1+1) 
+                                    : score->numerKilledBydoMinion1;
+    score->numerKilledBydoMinion2 = enemy.type == BYDO_MINION_2 
+                                    ? (score->numerKilledBydoMinion2+1) 
+                                    : score->numerKilledBydoMinion2;
+    score->numerKilledBydoMinion3 = enemy.type == BYDO_MINION_3 
+                                    ? (score->numerKilledBydoMinion3+1) 
+                                    : score->numerKilledBydoMinion3;
+}
+
+void projectileAndEnemiesCollision(Projectile *projectile, Spaceship spaceship, Score *score, Enemy enemies[]){
     for (int i = 0; i < NUM_ENEMIES; i++){
         if(projectile->state.active && enemies[i].active){
             if(hasCollisionBetweenProjectileAndEnemies(projectile, enemies[i])){
                 enemies[i].active = 0;
+                handleScore(score, enemies[i]);
                 if(projectile->radius < MAX_PROJECTILE_RADIUS){
                     resetProjectile(projectile, spaceship);
                 }
