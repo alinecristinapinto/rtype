@@ -3,7 +3,7 @@
 
 void initEnemies(Enemy enemies[], ALLEGRO_BITMAP *image);
 
-void releaseEnemies(Enemy enemies[], int screen_w, int screen_h);
+void releaseEnemies(Enemy enemies[]);
 
 void updateEnemies(Enemy enemies[]);
 

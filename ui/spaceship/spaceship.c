@@ -4,10 +4,11 @@
 #include <allegro5/allegro_image.h>
 #include "spaceship.h"
 #include "../../styles/colors.h"
+#include "../../utils/constants.h"
 
-void initSpaceship(Spaceship *spaceship, int screen_h){
+void initSpaceship(Spaceship *spaceship){
 	spaceship->x = 0;
-	spaceship->y = screen_h/2;
+	spaceship->y = SCREEN_H/2;
 	spaceship->sx = 0;
 	spaceship->sy = MIDDLE;
 	spaceship->width = SPACESHIP_WIDTH;
@@ -28,14 +29,14 @@ void drawSpaceship(Spaceship spaceship){
     );
 }
 
-void updateSpaceship(Spaceship *spaceship, int screen_w, int screen_h){
+void updateSpaceship(Spaceship *spaceship){
     float moveX = spaceship->x + spaceship->moveX * spaceship->moveSpeed;
     float moveY = spaceship->y + spaceship->moveY * spaceship->moveSpeed;
 
     if(moveX <= 0) moveX = 0;
-    if(moveX >= (screen_w - spaceship->width)) moveX = (screen_w - spaceship->width);
+    if(moveX >= (SCREEN_W - spaceship->width)) moveX = (SCREEN_W - spaceship->width);
     if(moveY <= 0) moveY = 0;
-    if(moveY >= (screen_h - spaceship->height)) moveY = (screen_h - spaceship->height);
+    if(moveY >= (SCREEN_H - spaceship->height)) moveY = (SCREEN_H - spaceship->height);
 
     spaceship->x = moveX;
     spaceship->y = moveY;
@@ -106,7 +107,7 @@ void powerUpProjectile(Projectile *projectile, Spaceship spaceship){
     projectile->y = spaceship.y + 17;
 }
 
-void updateProjectile(Projectile *projectile, Spaceship spaceship, int screen_w){
+void updateProjectile(Projectile *projectile, Spaceship spaceship){
     if(projectile->state.loading && projectile->radius <= MAX_PROJECTILE_RADIUS){
         powerUpProjectile(projectile, spaceship);
     }
@@ -115,7 +116,7 @@ void updateProjectile(Projectile *projectile, Spaceship spaceship, int screen_w)
         projectile->x += projectile->moveSpeed;
     }
 
-    if(projectile->state.active && projectile->x > screen_w){
+    if(projectile->state.active && projectile->x > SCREEN_W){
         resetProjectile(projectile, spaceship);
     }
 }

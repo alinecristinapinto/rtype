@@ -3,9 +3,9 @@
 #include "../../interfaces/scenario_interface.h"
 
 // Spaceship
-void initSpaceship(Spaceship *spaceship, int screen_h);
+void initSpaceship(Spaceship *spaceship);
 
-void updateSpaceship(Spaceship *spaceship, int screen_w, int screen_h);
+void updateSpaceship(Spaceship *spaceship);
 
 void drawSpaceship(Spaceship spaceship);
 
@@ -16,7 +16,7 @@ void initProjectile(Projectile *projectile, Spaceship spaceship);
 
 void shoot(Projectile *projectile, Spaceship *spaceship);
 
-void updateProjectile(Projectile *projectile, Spaceship spaceship, int screen_w);
+void updateProjectile(Projectile *projectile, Spaceship spaceship);
 
 void drawProjectile(Projectile projectile);
 

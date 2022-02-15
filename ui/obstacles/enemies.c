@@ -3,6 +3,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
 #include "enemies.h"
+#include "../../utils/constants.h"
 
 EnemyTypeEnum sortEnemyType(){
     return (enum EnemyTypeEnum)(rand()%3); 
@@ -61,12 +62,12 @@ void initEnemies(Enemy enemies[], ALLEGRO_BITMAP *image){
     }
 }
 
-void releaseEnemies(Enemy enemies[], int screen_w, int screen_h){
+void releaseEnemies(Enemy enemies[]){
     for (int i = 0; i < NUM_ENEMIES; i++){
         if(!enemies[i].active){
             if(rand()%100 == 0){
-                enemies[i].x = screen_w;
-                enemies[i].y = 30+rand()%(screen_h-60);
+                enemies[i].x = SCREEN_W;
+                enemies[i].y = 30+rand()%(SCREEN_H-60);
                 enemies[i].active = true;
                 break;
             }
@@ -99,12 +100,6 @@ void drawEnemies(Enemy enemies[]){
                 enemies[i].y, 
                 0
             );
-
-            // al_draw_filled_rectangle(enemies[i].x,
-            //                  enemies[i].y,
-            //                  enemies[i].x+enemies[i].width,
-            //                  enemies[i].y+enemies[i].height,
-            //                  al_map_rgba_f(.6,0,.6,.6));
         }
     }
 }

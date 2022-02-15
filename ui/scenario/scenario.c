@@ -1,24 +1,25 @@
 #include <stdio.h>
+#include <math.h>
+#include "scenario.h"
 #include <allegro5/allegro_primitives.h>
 #include "../../styles/colors.h"
-#include "scenario.h"
-#include <math.h>
+#include "../../utils/constants.h"
 
-void initStars(Star stars[], int screen_w, int screen_h, float moveSpeed){
+void initStars(Star stars[], float moveSpeed){
     for (int i = 0; i < NUM_STARS; i++){
-        stars[i].x = (rand() %screen_w) + screen_w;
-        stars[i].y = rand() %screen_h;
+        stars[i].x = (rand() %SCREEN_W) + SCREEN_W;
+        stars[i].y = rand() %SCREEN_H;
         stars[i].radius = rand()%2;
         stars[i].moveSpeed = moveSpeed;
     }
 }
 
-void updateStars(Star stars[],  int screen_w){
+void updateStars(Star stars[]){
     for (int i = 0; i < NUM_STARS; i++){
         stars[i].x -= stars[i].moveSpeed;
 
         if(stars[i].x < 0) {
-            stars[i].x = screen_w;
+            stars[i].x = SCREEN_W;
         }
     }
 }
@@ -47,16 +48,16 @@ void updateScore(Score *score){
     }
 }
 
-void drawScore(Score score, int screen_w, int screen_h, ALLEGRO_FONT *font20){
+void drawScore(Score score, ALLEGRO_FONT *font22){
     char scorePlayer[20];
     Colors colors = getColors();
 
     sprintf(scorePlayer, "Score: %d", score.score);
 
-    al_draw_text(font20, colors.WHITE, (0.5 * screen_w/15), screen_h/20, 0, scorePlayer);
+    al_draw_text(font22, colors.WHITE, (0.5 * SCREEN_W/15), SCREEN_H/20, 0, scorePlayer);
 }
 
-void drawGameOver(Score score, int screen_w, int screen_h, ALLEGRO_FONT *font22, ALLEGRO_FONT *font26){
+void drawGameOver(Score score, ALLEGRO_FONT *font22, ALLEGRO_FONT *font26){
     Colors colors = getColors();
     char titleGameOver[10];
     char titleStatistics[15];
@@ -76,12 +77,12 @@ void drawGameOver(Score score, int screen_w, int screen_h, ALLEGRO_FONT *font22,
     sprintf(bydoMinion2Statistics, "%d bydo minions 2 were destroyed", score.numerKilledBydoMinion2);
     sprintf(bydoMinion3Statistics, "%d bydo minions 3 were destroyed", score.numerKilledBydoMinion3);
 
-    al_draw_text(font26, colors.CYAN, (screen_w/2 - al_get_text_width(font26, titleGameOver)/2), screen_h/12, 0, titleGameOver);
-    al_draw_text(font22, score.newRecord ? colors.GREEN : colors.RED, (screen_w/2 - al_get_text_width(font22, scorePlayer)/2), screen_h/5, 0, scorePlayer);
-    al_draw_text(font22, colors.GREEN, (screen_w/2 - al_get_text_width(font22, record)/2), 1.35*screen_h/5, 0, record);
-    al_draw_text(font26, colors.CYAN, (screen_w/2 - al_get_text_width(font26, titleStatistics)/2), 1.2*screen_h/3, 0, titleStatistics);
-    al_draw_text(font22, colors.ORANGE, (screen_w/2 - al_get_text_width(font22, bydoMinion1Statistics)/2), screen_h/2, 0, bydoMinion1Statistics);
-    al_draw_text(font22, colors.ORANGE, (screen_w/2 - al_get_text_width(font22, bydoMinion2Statistics)/2), 1.15*screen_h/2, 0, bydoMinion2Statistics);
-    al_draw_text(font22, colors.ORANGE, (screen_w/2 - al_get_text_width(font22, bydoMinion3Statistics)/2), 1.3*screen_h/2, 0, bydoMinion3Statistics);
+    al_draw_text(font26, colors.CYAN, (SCREEN_W/2 - al_get_text_width(font26, titleGameOver)/2), SCREEN_H/12, 0, titleGameOver);
+    al_draw_text(font22, score.newRecord ? colors.GREEN : colors.RED, (SCREEN_W/2 - al_get_text_width(font22, scorePlayer)/2), SCREEN_H/5, 0, scorePlayer);
+    al_draw_text(font22, colors.GREEN, (SCREEN_W/2 - al_get_text_width(font22, record)/2), 1.35*SCREEN_H/5, 0, record);
+    al_draw_text(font26, colors.CYAN, (SCREEN_W/2 - al_get_text_width(font26, titleStatistics)/2), 1.2*SCREEN_H/3, 0, titleStatistics);
+    al_draw_text(font22, colors.ORANGE, (SCREEN_W/2 - al_get_text_width(font22, bydoMinion1Statistics)/2), SCREEN_H/2, 0, bydoMinion1Statistics);
+    al_draw_text(font22, colors.ORANGE, (SCREEN_W/2 - al_get_text_width(font22, bydoMinion2Statistics)/2), 1.15*SCREEN_H/2, 0, bydoMinion2Statistics);
+    al_draw_text(font22, colors.ORANGE, (SCREEN_W/2 - al_get_text_width(font22, bydoMinion3Statistics)/2), 1.3*SCREEN_H/2, 0, bydoMinion3Statistics);
 }
 

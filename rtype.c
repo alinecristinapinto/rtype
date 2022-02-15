@@ -12,10 +12,7 @@
 #include "ui/obstacles/block.h"
 #include "ui/obstacles/enemies.h"
 #include "utils/utils.h"
-
-const float FPS = 100;  
-const int SCREEN_W = 960;
-const int SCREEN_H = 540;
+#include "utils/constants.h"
 
 char scoreFileName [20] = "scores.dat";
 
@@ -64,14 +61,14 @@ int main(int argc, char **argv){
 	srand(time(NULL));
 
 	Star stars_p1[NUM_STARS];
-	initStars(stars_p1, SCREEN_W, SCREEN_H, 3);
+	initStars(stars_p1, 3);
 	Star stars_p2[NUM_STARS];
-	initStars(stars_p2, SCREEN_W, SCREEN_H, 5);
+	initStars(stars_p2, 5);
 
 	Spaceship spaceship;
 	ALLEGRO_BITMAP *spaceshipImage = al_load_bitmap("assets/img/spaceship.png");
 	spaceship.image = spaceshipImage;
-	initSpaceship(&spaceship, SCREEN_H);
+	initSpaceship(&spaceship);
 	
 	Projectile projectile;
 	initProjectile(&projectile, spaceship);
@@ -79,7 +76,7 @@ int main(int argc, char **argv){
 	Block block;
 	ALLEGRO_BITMAP *blockImage = al_load_bitmap("assets/img/block.png");
 	block.image = blockImage;
-	initBlock(&block, SCREEN_W, SCREEN_H);
+	initBlock(&block);
 
 	Enemy enemies[NUM_ENEMIES];
 	ALLEGRO_BITMAP *enemiesImage = al_load_bitmap("assets/img/enemies.png");
@@ -103,30 +100,30 @@ int main(int argc, char **argv){
 			playing = 0;
 		} else if(ev.type == ALLEGRO_EVENT_TIMER) {
 
-			updateStars(stars_p1, SCREEN_W);
+			updateStars(stars_p1);
 			drawStars(stars_p1);
 
-			updateStars(stars_p2, SCREEN_W);
+			updateStars(stars_p2);
 			drawStars(stars_p2);
 
-			updateBlock(&block, SCREEN_W, SCREEN_H);
+			updateBlock(&block);
 			drawBlock(block);
 
-			updateSpaceship(&spaceship, SCREEN_W, SCREEN_H);
+			updateSpaceship(&spaceship);
 			drawSpaceship(spaceship);
 
-			updateProjectile(&projectile, spaceship, SCREEN_W);
+			updateProjectile(&projectile, spaceship);
 			drawProjectile(projectile);
 			projectileAndEnemiesCollision(&projectile, spaceship, &score, enemies);
 			updateScore(&score);
 
-			releaseEnemies(enemies, SCREEN_W, SCREEN_H);
+			releaseEnemies(enemies);
 			updateEnemies(enemies);
 			drawEnemies(enemies);
 			handleCollisionBetweenEnemies(enemies);
 			handleCollisionBetweenEnemiesAndBlock(enemies, block);
 
-			drawScore(score, SCREEN_W, SCREEN_H, font);
+			drawScore(score, font);
 			
 			int gameOver = spaceshipAndEnemiesCollision(spaceship, enemies) ||
 					  spaceshipAndBlockCollision(spaceship, block);
@@ -134,7 +131,7 @@ int main(int argc, char **argv){
 			if(gameOver){
 				playing = 0;
 				updateGameHistory(score);
-				drawGameOver(score, SCREEN_W, SCREEN_H, font, font32);
+				drawGameOver(score, font, font32);
         		al_flip_display();
         		al_rest(5);
 			}

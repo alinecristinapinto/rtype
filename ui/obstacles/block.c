@@ -3,22 +3,23 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
 #include "block.h"
+#include "../../utils/constants.h"
 
-void initBlock(Block *block, int screen_w, int screen_h){
-    block->x = screen_w + rand()%(screen_w);
-    block->y = rand()%(4*screen_h/5);
-    block->width = screen_w + rand()%(screen_w/2);
-    block->height = screen_h/5 + rand()%(2*screen_h/5);
+void initBlock(Block *block){
+    block->x = SCREEN_W + rand()%(SCREEN_W);
+    block->y = rand()%(4*SCREEN_H/5);
+    block->width = SCREEN_W + rand()%(SCREEN_W/2);
+    block->height = SCREEN_H/5 + rand()%(2*SCREEN_H/5);
     block->sx = 0;
 	block->sy = 0;
     block->moveSpeed = 2+rand()%BLOCK_SPEED;
 }
 
-void updateBlock(Block *block, int screen_w, int screen_h){
+void updateBlock(Block *block){
     block->x -= block->moveSpeed;
 
     if(block->x + block->width < 0){
-        initBlock(block, screen_w, screen_h);
+        initBlock(block);
     }
 }
 
