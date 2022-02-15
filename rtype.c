@@ -11,10 +11,27 @@
 #include "ui/scenario/scenario.h"
 #include "ui/obstacles/block.h"
 #include "ui/obstacles/enemies.h"
+#include "utils/utils.h"
 
 const float FPS = 100;  
 const int SCREEN_W = 960;
 const int SCREEN_H = 540;
+
+char scoreFileName [20] = "scores.dat";
+
+void getGameHistory(Score *score){
+	FILE *scoreFile = openFile(scoreFileName, "r");
+	if(scoreFile){
+		readGameHistory(scoreFile, score);
+	}
+	fclose(scoreFile);
+}
+
+void updateGameHistory(Score score){
+    FILE *scoreFile = openFile(scoreFileName, "w+");
+    writeGameHistory(scoreFile, score);
+    closeFile(scoreFile);
+}
 
 int main(int argc, char **argv){
 	
@@ -70,7 +87,9 @@ int main(int argc, char **argv){
 
 	Score score;
 	initScore(&score);
+	getGameHistory(&score);
     ALLEGRO_FONT *font = al_load_font("assets/fonts/AtariSmall.ttf", 22, 1);
+	ALLEGRO_FONT *font32 = al_load_font("assets/fonts/AtariSmall.ttf", 26, 1);
 	
 	//----------------------- main -----------------------
 
@@ -99,6 +118,7 @@ int main(int argc, char **argv){
 			updateProjectile(&projectile, spaceship, SCREEN_W);
 			drawProjectile(projectile);
 			projectileAndEnemiesCollision(&projectile, spaceship, &score, enemies);
+			updateScore(&score);
 
 			releaseEnemies(enemies, SCREEN_W, SCREEN_H);
 			updateEnemies(enemies);
@@ -108,8 +128,16 @@ int main(int argc, char **argv){
 
 			drawScore(score, SCREEN_W, SCREEN_H, font);
 			
-			playing = !spaceshipAndEnemiesCollision(spaceship, enemies) &&
-					  !spaceshipAndBlockCollision(spaceship, block);
+			int gameOver = spaceshipAndEnemiesCollision(spaceship, enemies) ||
+					  spaceshipAndBlockCollision(spaceship, block);
+
+			if(gameOver){
+				playing = 0;
+				updateGameHistory(score);
+				drawGameOver(score, SCREEN_W, SCREEN_H, font, font32);
+        		al_flip_display();
+        		al_rest(5);
+			}
 
 			al_flip_display();
 			
@@ -127,6 +155,7 @@ int main(int argc, char **argv){
 	al_destroy_bitmap(blockImage);
 	al_destroy_bitmap(enemiesImage);
 	al_destroy_font(font);
+	al_destroy_font(font32);
 	al_destroy_display(display);
 	al_destroy_event_queue(event_queue);
  

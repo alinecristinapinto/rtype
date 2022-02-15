@@ -12,4 +12,8 @@ void drawStars(Star stars[]);
 
 void initScore(Score *score);
 
+void updateScore(Score *score);
+
 void drawScore(Score score, int screen_w, int screen_h, ALLEGRO_FONT *font);
+
+void drawGameOver(Score score, int screen_w, int screen_h, ALLEGRO_FONT *font22, ALLEGRO_FONT *font26);

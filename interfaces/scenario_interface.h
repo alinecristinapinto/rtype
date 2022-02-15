@@ -11,6 +11,8 @@ typedef struct Star
 typedef struct Score
 {
     int score;
+    int record;
+    int newRecord;
     int numerKilledBydoMinion1, numerKilledBydoMinion2, numerKilledBydoMinion3;
 } Score;
 

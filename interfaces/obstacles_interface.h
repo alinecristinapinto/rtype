@@ -5,7 +5,7 @@
 
 #define NUM_ENEMIES 10
 #define ENEMY_SPEED 5
-#define BLOCK_SPEED 10;
+#define BLOCK_SPEED 5;
 
 typedef struct Block
 {

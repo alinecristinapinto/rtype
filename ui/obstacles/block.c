@@ -11,7 +11,7 @@ void initBlock(Block *block, int screen_w, int screen_h){
     block->height = screen_h/5 + rand()%(2*screen_h/5);
     block->sx = 0;
 	block->sy = 0;
-    block->moveSpeed = 4+rand()%BLOCK_SPEED;
+    block->moveSpeed = 2+rand()%BLOCK_SPEED;
 }
 
 void updateBlock(Block *block, int screen_w, int screen_h){
