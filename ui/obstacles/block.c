@@ -42,3 +42,4 @@ int spaceshipAndBlockCollision(Spaceship spaceship, Block block){
 
     return xArea && yArea;
 }
+

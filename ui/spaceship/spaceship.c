@@ -149,7 +149,7 @@ void handleScore(Score *score, Enemy enemy){
                                     : score->numerKilledBydoMinion3;
 }
 
-void projectileAndEnemiesCollision(Projectile *projectile, Spaceship spaceship, Score *score, Enemy enemies[]){
+void handleCollisionBetweenProjectileAndEnemies(Projectile *projectile, Spaceship spaceship, Score *score, Enemy enemies[]){
     for (int i = 0; i < NUM_ENEMIES; i++){
         if(projectile->state.active && enemies[i].active){
             if(hasCollisionBetweenProjectileAndEnemies(projectile, enemies[i])){
@@ -160,5 +160,14 @@ void projectileAndEnemiesCollision(Projectile *projectile, Spaceship spaceship, 
                 }
             }
         }
+    }
+}
+
+void handleCollisionBetweenProjetileAndBlock(Projectile *projectile, Spaceship spaceship, Block block){
+    int xArea = projectile->x > block.x && projectile->x < (block.x + block.width);
+    int yArea = projectile->y > block.y && projectile->y < (block.y + block.height);
+
+    if(xArea && yArea){
+        resetProjectile(projectile, spaceship);
     }
 }

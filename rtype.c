@@ -114,7 +114,8 @@ int main(int argc, char **argv){
 
 			updateProjectile(&projectile, spaceship);
 			drawProjectile(projectile);
-			projectileAndEnemiesCollision(&projectile, spaceship, &score, enemies);
+			handleCollisionBetweenProjetileAndBlock(&projectile, spaceship, block);
+			handleCollisionBetweenProjectileAndEnemies(&projectile, spaceship, &score, enemies);
 			updateScore(&score);
 
 			releaseEnemies(enemies);
@@ -133,7 +134,7 @@ int main(int argc, char **argv){
 				updateGameHistory(score);
 				drawGameOver(score, font, font32);
         		al_flip_display();
-        		al_rest(5);
+        		al_rest(3);
 			}
 
 			al_flip_display();

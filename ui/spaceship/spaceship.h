@@ -20,4 +20,6 @@ void updateProjectile(Projectile *projectile, Spaceship spaceship);
 
 void drawProjectile(Projectile projectile);
 
-void projectileAndEnemiesCollision(Projectile *projectile, Spaceship spaceship, Score *score, Enemy enemies[]);
+void handleCollisionBetweenProjectileAndEnemies(Projectile *projectile, Spaceship spaceship, Score *score, Enemy enemies[]);
+
+void handleCollisionBetweenProjetileAndBlock(Projectile *projectile, Spaceship spaceship, Block block);
