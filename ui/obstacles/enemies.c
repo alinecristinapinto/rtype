@@ -11,40 +11,40 @@ EnemyTypeEnum sortEnemyType(){
 
 float sortEnemyTypePosition(EnemyTypeEnum type){
     switch (type){
-        case BYDO_MINION_1:
-            return BYDO_MINION_1_POSITION;
-        case BYDO_MINION_2:
-            return BYDO_MINION_2_POSITION;
-        case BYDO_MINION_3:
-            return BYDO_MINION_3_POSITION;
+        case GOUACHE:
+            return GOUACHE_POSITION;
+        case FENRIR:
+            return FENRIR_POSITION;
+        case OLLIE:
+            return OLLIE_POSITION;
         default:
-            return BYDO_MINION_1_POSITION;
+            return GOUACHE_POSITION;
     }
 }
 
 float sortEnemyTypeWidth(EnemyTypeEnum type){
     switch (type){
-        case BYDO_MINION_1:
-            return BYDO_MINION_1_WIDTH;
-        case BYDO_MINION_2:
-            return BYDO_MINION_2_WIDTH;
-        case BYDO_MINION_3:
-            return BYDO_MINION_3_WIDTH;
+        case GOUACHE:
+            return GOUACHE_WIDTH;
+        case FENRIR:
+            return FENRIR_WIDTH;
+        case OLLIE:
+            return OLLIE_WIDTH;
         default:
-            return BYDO_MINION_1_WIDTH;
+            return GOUACHE_WIDTH;
     }
 }
 
 float sortEnemyTypeHeight(EnemyTypeEnum type){
     switch (type){
-        case BYDO_MINION_1:
-            return BYDO_MINION_1_HEIGHT;
-        case BYDO_MINION_2:
-            return BYDO_MINION_2_HEIGHT;
-        case BYDO_MINION_3:
-            return BYDO_MINION_3_HEIGHT;
+        case GOUACHE:
+            return GOUACHE_HEIGHT;
+        case FENRIR:
+            return FENRIR_HEIGHT;
+        case OLLIE:
+            return OLLIE_HEIGHT;
         default:
-            return BYDO_MINION_1_HEIGHT;
+            return GOUACHE_HEIGHT;
     }
 }
 

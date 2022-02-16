@@ -73,9 +73,9 @@ void drawGameOver(Score score, ALLEGRO_FONT *font22, ALLEGRO_FONT *font26){
     sprintf(scorePlayer, "Score: %d", score.score);
     sprintf(record, score.newRecord ? "New record: %d !!" : "Current record: %d", score.record);
     sprintf(titleStatistics, "Statistics:");
-    sprintf(bydoMinion1Statistics, "%d bydo minions 1 were destroyed", score.numerKilledBydoMinion1);
-    sprintf(bydoMinion2Statistics, "%d bydo minions 2 were destroyed", score.numerKilledBydoMinion2);
-    sprintf(bydoMinion3Statistics, "%d bydo minions 3 were destroyed", score.numerKilledBydoMinion3);
+    sprintf(bydoMinion1Statistics, "%d Gouache were destroyed", score.numerKilledBydoMinion1);
+    sprintf(bydoMinion2Statistics, "%d Fenrir were destroyed", score.numerKilledBydoMinion2);
+    sprintf(bydoMinion3Statistics, "%d Ollie were destroyed", score.numerKilledBydoMinion3);
 
     al_draw_text(font26, colors.CYAN, (SCREEN_W/2 - al_get_text_width(font26, titleGameOver)/2), SCREEN_H/12, 0, titleGameOver);
     al_draw_text(font22, score.newRecord ? colors.GREEN : colors.RED, (SCREEN_W/2 - al_get_text_width(font22, scorePlayer)/2), SCREEN_H/5, 0, scorePlayer);

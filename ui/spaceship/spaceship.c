@@ -73,13 +73,12 @@ void controlSpaceship(int keycode, Spaceship *spaceship, Projectile *projectile,
         case ALLEGRO_KEY_SPACE:
             if(keyEvent == KEY_DOWN) {
                 if(!projectile->state.active){
-                    projectile->state.active = 1;
                     projectile->state.loading = 1;
                 }
             }
             if(keyEvent == KEY_UP) {
                 projectile->state.loading = 0;
-                projectile->state.released = 1;
+                projectile->state.active = 1;
             }
             break;
         default:
@@ -92,8 +91,7 @@ void initProjectile(Projectile *projectile, Spaceship spaceship){
     projectile->moveSpeed = 10;
     projectile->state.active = 0;
     projectile->state.loading = 0;
-    projectile->state.released = 0;
-    projectile->x = spaceship.x + spaceship.width + 5;
+    projectile->x = spaceship.x + spaceship.width + 2;
     projectile->y = spaceship.y + 17;
 }
 
@@ -103,10 +101,10 @@ void resetProjectile(Projectile *projectile, Spaceship spaceship){
 
 void updateProjectile(Projectile *projectile, Spaceship spaceship){
     if(projectile->state.loading && projectile->radius <= MAX_PROJECTILE_RADIUS){
-        projectile->radius += 0.20;
+        projectile->radius += 0.1;
     }
 
-    if(projectile->state.released){
+    if(projectile->state.active){
         projectile->x += projectile->moveSpeed;
     } else {
         projectile->x = spaceship.x + spaceship.width + 10;
@@ -120,10 +118,7 @@ void updateProjectile(Projectile *projectile, Spaceship spaceship){
 
 void drawProjectile(Projectile projectile){
     Colors colors = getColors();
-
-    if(projectile.state.active){
-        al_draw_filled_circle(projectile.x, projectile.y, projectile.radius, colors.CYAN);
-    }
+    al_draw_filled_circle(projectile.x, projectile.y, projectile.radius, colors.CYAN);
 }
 
 int hasCollisionBetweenProjectileAndEnemies(Projectile *projectile, Enemy enemy){
@@ -134,21 +129,21 @@ int hasCollisionBetweenProjectileAndEnemies(Projectile *projectile, Enemy enemy)
 }
 
 void handleScore(Score *score, Enemy enemy){
-    score->score += 2 * abs(enemy.moveSpeed) + (enemy.type * 4);
-    score->numerKilledBydoMinion1 = enemy.type == BYDO_MINION_1 
+    score->score += (4 * abs(enemy.moveSpeed) + (enemy.type * 4));
+    score->numerKilledBydoMinion1 = enemy.type == GOUACHE 
                                     ? (score->numerKilledBydoMinion1+1) 
                                     : score->numerKilledBydoMinion1;
-    score->numerKilledBydoMinion2 = enemy.type == BYDO_MINION_2 
+    score->numerKilledBydoMinion2 = enemy.type == FENRIR 
                                     ? (score->numerKilledBydoMinion2+1) 
                                     : score->numerKilledBydoMinion2;
-    score->numerKilledBydoMinion3 = enemy.type == BYDO_MINION_3 
+    score->numerKilledBydoMinion3 = enemy.type == OLLIE 
                                     ? (score->numerKilledBydoMinion3+1) 
                                     : score->numerKilledBydoMinion3;
 }
 
 void handleCollisionBetweenProjectileAndEnemies(Projectile *projectile, Spaceship spaceship, Score *score, Enemy enemies[]){
     for (int i = 0; i < NUM_ENEMIES; i++){
-        if(enemies[i].active  && projectile->state.released){
+        if(enemies[i].active  && projectile->state.active){
             if(hasCollisionBetweenProjectileAndEnemies(projectile, enemies[i])){
                 enemies[i].active = 0;
                 handleScore(score, enemies[i]);

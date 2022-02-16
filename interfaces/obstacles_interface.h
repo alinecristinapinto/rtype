@@ -4,7 +4,7 @@
 #define PDS_TP1_RTYPE_OBSTACLES_INTERFACE_H
 
 #define NUM_ENEMIES 10
-#define ENEMY_SPEED 5
+#define ENEMY_SPEED 8
 #define BLOCK_SPEED 5;
 
 typedef struct Block
@@ -14,9 +14,9 @@ typedef struct Block
 } Block;
 
 typedef enum EnemyTypeEnum { 
-    BYDO_MINION_1,
-    BYDO_MINION_2,
-    BYDO_MINION_3
+    GOUACHE,
+    FENRIR,
+    OLLIE
 } EnemyTypeEnum;
 
 typedef struct Enemy
@@ -29,23 +29,21 @@ typedef struct Enemy
 } Enemy;
 
 typedef enum EnemyTypePositionEnum {
-    BYDO_MINION_1_POSITION = 1,
-    BYDO_MINION_2_POSITION = 50,
-    BYDO_MINION_3_POSITION = 110
+    GOUACHE_POSITION = 1,
+    FENRIR_POSITION = 50,
+    OLLIE_POSITION = 110
 } EnemyTypePositionEnum;
 
 typedef enum EnemyTypeWidthtEnum { 
-    BYDO_MINION_1_WIDTH = 47,
-    BYDO_MINION_2_WIDTH = 50,
-    BYDO_MINION_3_WIDTH = 50
+    GOUACHE_WIDTH = 47,
+    FENRIR_WIDTH = 50,
+    OLLIE_WIDTH = 50
 } EnemyTypeHWidthEnum;
 
 typedef enum EnemyTypeHeightEnum { 
-    BYDO_MINION_1_HEIGHT = 49,
-    BYDO_MINION_2_HEIGHT = 59,
-    BYDO_MINION_3_HEIGHT = 32
+    GOUACHE_HEIGHT = 49,
+    FENRIR_HEIGHT = 59,
+    OLLIE_HEIGHT = 32
 } EnemyTypeHeightEnum;
-
-// ZABTOM
 
 #endif

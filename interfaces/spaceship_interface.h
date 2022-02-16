@@ -21,7 +21,7 @@ typedef struct Spaceship
 
 typedef struct ProjectileState
 {
-	int active, loading, released;
+	int active, loading;
 } ProjectileState;
 
 typedef struct Projectile
