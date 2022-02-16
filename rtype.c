@@ -25,9 +25,11 @@ void getGameHistory(Score *score){
 }
 
 void updateGameHistory(Score score){
-    FILE *scoreFile = openFile(scoreFileName, "w+");
-    writeGameHistory(scoreFile, score);
-    closeFile(scoreFile);
+	if(score.score >= score.record){
+		FILE *scoreFile = openFile(scoreFileName, "w+");
+		writeGameHistory(scoreFile, score);
+		closeFile(scoreFile);
+	}
 }
 
 int main(int argc, char **argv){

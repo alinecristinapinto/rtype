@@ -101,19 +101,16 @@ void resetProjectile(Projectile *projectile, Spaceship spaceship){
     initProjectile(projectile, spaceship);
 }
 
-void powerUpProjectile(Projectile *projectile, Spaceship spaceship){
-    projectile->radius += 0.20;
-    projectile->x = spaceship.x + spaceship.width + 10;
-    projectile->y = spaceship.y + 17;
-}
-
 void updateProjectile(Projectile *projectile, Spaceship spaceship){
     if(projectile->state.loading && projectile->radius <= MAX_PROJECTILE_RADIUS){
-        powerUpProjectile(projectile, spaceship);
+        projectile->radius += 0.20;
     }
 
     if(projectile->state.released){
         projectile->x += projectile->moveSpeed;
+    } else {
+        projectile->x = spaceship.x + spaceship.width + 10;
+        projectile->y = spaceship.y + 17;
     }
 
     if(projectile->state.active && projectile->x > SCREEN_W){
@@ -151,14 +148,14 @@ void handleScore(Score *score, Enemy enemy){
 
 void handleCollisionBetweenProjectileAndEnemies(Projectile *projectile, Spaceship spaceship, Score *score, Enemy enemies[]){
     for (int i = 0; i < NUM_ENEMIES; i++){
-        if(projectile->state.active && enemies[i].active){
+        if(enemies[i].active  && projectile->state.released){
             if(hasCollisionBetweenProjectileAndEnemies(projectile, enemies[i])){
                 enemies[i].active = 0;
                 handleScore(score, enemies[i]);
                 if(projectile->radius < MAX_PROJECTILE_RADIUS){
                     resetProjectile(projectile, spaceship);
                 }
-            }
+            } 
         }
     }
 }
