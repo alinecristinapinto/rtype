@@ -9,7 +9,7 @@ EnemyTypeEnum sortEnemyType(){
     return (enum EnemyTypeEnum)(rand()%3); 
 }
 
-float sortEnemyTypePosition(EnemyTypeEnum type){
+float getEnemyTypePosition(EnemyTypeEnum type){
     switch (type){
         case GOUACHE:
             return GOUACHE_POSITION;
@@ -22,7 +22,7 @@ float sortEnemyTypePosition(EnemyTypeEnum type){
     }
 }
 
-float sortEnemyTypeWidth(EnemyTypeEnum type){
+float getEnemyTypeWidth(EnemyTypeEnum type){
     switch (type){
         case GOUACHE:
             return GOUACHE_WIDTH;
@@ -35,7 +35,7 @@ float sortEnemyTypeWidth(EnemyTypeEnum type){
     }
 }
 
-float sortEnemyTypeHeight(EnemyTypeEnum type){
+float getEnemyTypeHeight(EnemyTypeEnum type){
     switch (type){
         case GOUACHE:
             return GOUACHE_HEIGHT;
@@ -54,9 +54,9 @@ void initEnemies(Enemy enemies[], ALLEGRO_BITMAP *image){
         enemies[i].image = image;
         enemies[i].type = sortEnemyType();
         enemies[i].sx = 0;
-        enemies[i].sy = sortEnemyTypePosition(enemies[i].type);
-        enemies[i].width = sortEnemyTypeWidth(enemies[i].type);
-        enemies[i].height = sortEnemyTypeHeight(enemies[i].type);
+        enemies[i].sy = getEnemyTypePosition(enemies[i].type);
+        enemies[i].width = getEnemyTypeWidth(enemies[i].type);
+        enemies[i].height = getEnemyTypeHeight(enemies[i].type);
         enemies[i].moveSpeed = 1+rand()%ENEMY_SPEED;
         enemies[i].active = false;
     }
@@ -159,4 +159,3 @@ int spaceshipAndEnemiesCollision(Spaceship spaceship, Enemy enemies[]){
 
     return 0;
 }
-

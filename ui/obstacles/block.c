@@ -6,6 +6,7 @@
 #include "../../utils/constants.h"
 
 void initBlock(Block *block){
+    block->image = al_load_bitmap("assets/img/block.png");
     block->x = SCREEN_W + rand()%(SCREEN_W);
     block->y = rand()%(4*SCREEN_H/5);
     block->width = SCREEN_W + rand()%(SCREEN_W/2);

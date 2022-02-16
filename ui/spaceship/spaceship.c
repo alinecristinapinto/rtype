@@ -7,6 +7,7 @@
 #include "../../utils/constants.h"
 
 void initSpaceship(Spaceship *spaceship){
+    spaceship->image = al_load_bitmap("assets/img/spaceship.png");
 	spaceship->x = 0;
 	spaceship->y = SCREEN_H/2;
 	spaceship->sx = 0;
