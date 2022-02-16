@@ -67,7 +67,7 @@ void releaseEnemies(Enemy enemies[]){
         if(!enemies[i].active){
             if(rand()%100 == 0){
                 enemies[i].x = SCREEN_W;
-                enemies[i].y = 30+rand()%(SCREEN_H-60);
+                enemies[i].y = rand()%(SCREEN_H-(int)enemies[i].height);
                 enemies[i].active = true;
                 break;
             }
