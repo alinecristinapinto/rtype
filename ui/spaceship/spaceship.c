@@ -5,6 +5,7 @@
 #include "spaceship.h"
 #include "../../styles/colors.h"
 #include "../../utils/constants.h"
+#include "../../utils/utils.h"
 
 void initSpaceship(Spaceship *spaceship){
     spaceship->image = al_load_bitmap("assets/img/spaceship.png");
@@ -123,10 +124,16 @@ void drawProjectile(Projectile projectile){
 }
 
 int hasCollisionBetweenProjectileAndEnemies(Projectile *projectile, Enemy enemy){
-    int xArea = projectile->x > enemy.x && projectile->x < (enemy.x + enemy.width);
-    int yArea = projectile->y > enemy.y && projectile->y < (enemy.y + enemy.height);
-
-    return xArea && yArea;
+    return hasBoundingBoxCollision(
+        projectile->x,
+        projectile->y,
+        projectile->radius * 2,
+        projectile->radius * 2,
+        enemy.x,
+        enemy.y,
+        enemy.width,
+        enemy.height
+    );
 }
 
 void handleScore(Score *score, Enemy enemy){
@@ -157,10 +164,17 @@ void handleCollisionBetweenProjectileAndEnemies(Projectile *projectile, Spaceshi
 }
 
 void handleCollisionBetweenProjetileAndBlock(Projectile *projectile, Spaceship spaceship, Block block){
-    int xArea = projectile->x > block.x && projectile->x < (block.x + block.width);
-    int yArea = projectile->y > block.y && projectile->y < (block.y + block.height);
-
-    if(xArea && yArea){
+    int collision = hasBoundingBoxCollision(
+        projectile->x,
+        projectile->y,
+        projectile->radius * 2,
+        projectile->radius * 2,
+        block.x,
+        block.y,
+        block.width,
+        block.height
+    );
+    if(collision){
         resetProjectile(projectile, spaceship);
     }
 }

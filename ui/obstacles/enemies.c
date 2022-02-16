@@ -4,6 +4,7 @@
 #include <allegro5/allegro_image.h>
 #include "enemies.h"
 #include "../../utils/constants.h"
+#include "../../utils/utils.h"
 
 EnemyTypeEnum sortEnemyType(){
     return (enum EnemyTypeEnum)(rand()%3); 
@@ -105,10 +106,16 @@ void drawEnemies(Enemy enemies[]){
 }
 
 int hasCollisionBetweenEnemies(Enemy enemy1, Enemy enemy2){
-    int xArea = (enemy1.x + enemy1.width) > enemy2.x && enemy1.x < (enemy2.x + enemy2.width);
-    int yArea = (enemy1.y + enemy1.height) > enemy2.y && enemy1.y < (enemy2.y + enemy2.height);
-
-    return xArea && yArea;
+    return hasBoundingBoxCollision(
+        enemy1.x,
+        enemy1.y,
+        enemy1.width,
+        enemy1.height, 
+        enemy2.x,
+        enemy2.y,
+        enemy2.width,
+        enemy2.height
+    );
 }
 
 void handleCollisionBetweenEnemies(Enemy enemies[]){
@@ -126,11 +133,17 @@ void handleCollisionBetweenEnemies(Enemy enemies[]){
     }
 }
 
-int hasCollisionBetweenEnemiesAndBlock(Enemy enemy1, Block block){
-    int xArea = (enemy1.x + enemy1.width) > block.x && enemy1.x < (block.x + block.width);
-    int yArea = (enemy1.y + enemy1.height) > block.y && enemy1.y < (block.y + block.height);
-
-    return xArea && yArea;
+int hasCollisionBetweenEnemiesAndBlock(Enemy enemy, Block block){
+    return hasBoundingBoxCollision(
+        enemy.x,
+        enemy.y,
+        enemy.width,
+        enemy.height, 
+        block.x,
+        block.y,
+        block.width,
+        block.height
+    );
 }
 
 void handleCollisionBetweenEnemiesAndBlock(Enemy enemies[], Block block){
@@ -146,12 +159,18 @@ void handleCollisionBetweenEnemiesAndBlock(Enemy enemies[], Block block){
 int spaceshipAndEnemiesCollision(Spaceship spaceship, Enemy enemies[]){
     for (int i = 0; i < NUM_ENEMIES; i++){
         if(enemies[i].active){
-            int xArea = (spaceship.x + spaceship.width) > enemies[i].x &&
-                         spaceship.x < (enemies[i].x + enemies[i].width);
-            int yArea = (spaceship.y + spaceship.height) > enemies[i].y &&
-                         spaceship.y < (enemies[i].y + enemies[i].height);
+            int collision = hasBoundingBoxCollision(
+                spaceship.x,
+                spaceship.y,
+                spaceship.width,
+                spaceship.height, 
+                enemies[i].x,
+                enemies[i].y,
+                enemies[i].width,
+                enemies[i].height
+            );
 
-            if(xArea && yArea) {
+            if(collision) {
                 return 1;
             };
         }

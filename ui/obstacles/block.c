@@ -4,6 +4,7 @@
 #include <allegro5/allegro_image.h>
 #include "block.h"
 #include "../../utils/constants.h"
+#include "../../utils/utils.h"
 
 void initBlock(Block *block){
     block->image = al_load_bitmap("assets/img/block.png");
@@ -38,9 +39,15 @@ void drawBlock(Block block){
 }
 
 int spaceshipAndBlockCollision(Spaceship spaceship, Block block){
-    int xArea = (spaceship.x + spaceship.width) > block.x && spaceship.x < (block.x + block.width);
-    int yArea = (spaceship.y + spaceship.height) > block.y && spaceship.y < (block.y + block.height);
-
-    return xArea && yArea;
+    return hasBoundingBoxCollision(
+        spaceship.x,
+        spaceship.y,
+        spaceship.width,
+        spaceship.height,
+        block.x,
+        block.y,
+        block.width,
+        block.height
+    );
 }
 
